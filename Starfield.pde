@@ -7,13 +7,15 @@ void setup()
   rectMode(CENTER);
   particles = new Particle[1000];
   particles[0] = new OddballParticle();
-  for (int i = 0; i < particles.length;i++) {
+  particles[1] = new JumboParticle();
+  for (int i = 2; i < particles.length;i++) {
     particles[i] = new NormalParticle(width/2,height/2);
   }
 }
 
 void draw()
 {
+  background(0);
   for (int i = 0; i < particles.length; i++) {
     particles[i].move();
   }
@@ -21,11 +23,12 @@ void draw()
 
 class NormalParticle implements Particle {
   int x, y, angle, speed;
+  color c;
   NormalParticle(int x, int y) {
-    x = 2;
-    y = 3;
-    angle = 60;
-    speed = 40;
+    this.x=x;
+    this.y=y;
+    this.angle=(int)(Math.random()*2*Math.PI);
+    this.speed=(int)(Math.random()*25);
   }
   
   public void move() {
@@ -70,9 +73,14 @@ class OddballParticle implements Particle {
   }
 }
 
-class JumboParticle //uses inheritance
-{
+class JumboParticle extends NormalParticle {
+  JumboParticle(int x, int y) {
+    super(x,y);
+  }
   JumboParticle() {
-    
+    public void show() {
+      fill(c);
+      ellipse((float)x, (float)y, 5, 5);
+    }
   }
 }
