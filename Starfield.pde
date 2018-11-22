@@ -1,20 +1,23 @@
+/* Particles by Gabby S.
+For CS 12
+November 2018 */
+
 Particle[] particles;
 
-void setup()
-{
+void setup() {
   size(600,600);
   background(0);
   rectMode(CENTER);
   particles = new Particle[1000];
   particles[0] = new OddballParticle();
-  particles[1] = new JumboParticle();
-  for (int i = 2; i < particles.length;i++) {
+  //particles[1] = new JumboParticle();
+  for (int i = 1; i < particles.length;i++) {
     particles[i] = new NormalParticle(width/2,height/2);
+    particles[i] = new JumboParticle(width/2,height/2);
   }
 }
 
-void draw()
-{
+void draw() {
   background(0);
   for (int i = 0; i < particles.length; i++) {
     particles[i].move();
@@ -29,6 +32,11 @@ class NormalParticle implements Particle {
     this.y=y;
     this.angle=(int)(Math.random()*2*Math.PI);
     this.speed=(int)(Math.random()*25);
+    this.c = color(
+      (int)(Math.random()*256),
+      (int)(Math.random()*256),
+      (int)(Math.random()*256)
+    );
   }
   
   public void move() {
@@ -77,10 +85,15 @@ class JumboParticle extends NormalParticle {
   JumboParticle(int x, int y) {
     super(x,y);
   }
-  JumboParticle() {
     public void show() {
       fill(c);
-      ellipse((float)x, (float)y, 5, 5);
+      ellipse((float)x, (float)y, 25,25);
     }
+    
+    public void move() {
+      x += cos(angle)*(speed);
+      y += sin(angle)*(speed)*22;
+      show();
   }
+  
 }
