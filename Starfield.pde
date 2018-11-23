@@ -10,15 +10,14 @@ void setup() {
   rectMode(CENTER);
   particles = new Particle[1000];
   particles[0] = new OddballParticle();
-  //particles[1] = new JumboParticle();
   for (int i = 1; i < particles.length;i++) {
     particles[i] = new NormalParticle(width/2,height/2);
-    particles[i] = new JumboParticle(width/2,height/2);
   }
+    particles[1] = new JumboParticle(width/2,height/2);
 }
 
 void draw() {
-  background(0);
+  //background(0);
   for (int i = 0; i < particles.length; i++) {
     particles[i].move();
   }
@@ -42,10 +41,11 @@ class NormalParticle implements Particle {
   public void move() {
     x += cos(angle)*(speed);
     y += sin(angle)*(speed);
+    show();
   }
   
   public void show() {
-    fill(25);
+    fill(c);
     ellipse((float)x, (float)y, 5, 5);
   }
 }
@@ -62,22 +62,18 @@ class OddballParticle implements Particle {
   OddballParticle() {
     x = width/2;
     y = height/2;
-    c = color(
-      (int)(Math.random()*256),
-      (int)(Math.random()*256),
-      (int)(Math.random()*256)
-    );
   }
+  
   public void move() {
-    x += (int)(Math.random()*51) - 25;
-    y += (int)(Math.random()*51) - 25;
+    x += (int)(Math.random()*51)-25;
+    y += (int)(Math.random()*51)-25;
     show();
   }
   
   public void show() {
     ellipseMode(CENTER);
-    fill(c, 200);
-    ellipse(x,y,50,20);
+    fill(200);
+    ellipse(x,y,2,11);
   }
 }
 
@@ -86,13 +82,13 @@ class JumboParticle extends NormalParticle {
     super(x,y);
   }
     public void show() {
-      fill(c);
-      ellipse((float)x, (float)y, 25,25);
+      fill(100);
+      ellipse((float)x,(float)y, 25,25);
     }
     
     public void move() {
       x += cos(angle)*(speed);
-      y += sin(angle)*(speed)*22;
+      x += sin(angle)*(speed);
       show();
   }
   
